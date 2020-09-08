@@ -4,9 +4,12 @@ const routesApp = require(__dirname+'/routes/routesApp.js');
 const noSniff = require('dont-sniff-mimetype');
 const path = require('path');
 
-
 //SETTINGS
-app.set('port', process.env.PORT || 5000);
+const port = process.env.PORT;
+    if (port == null || port == "") {
+    port = 5000;
+    }
+
 const allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', '*');
@@ -23,6 +26,6 @@ app.use(allowCrossDomain);
 app.use(noSniff());
 app.use(routesApp);
 
-app.listen( app.get('port'), ()=> {
-    console.log("Express server listening on port " + app.get('port') ); 
-});
+app.listen(port, () => {
+    console.log("Express server listening on port " + port ); 
+} );
