@@ -1,0 +1,23 @@
+{
+  "name": "ndriks",
+  "version": "1.0.0",
+  "description": "Web-Page",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bastar2/ndriks.git"
+  },
+  "author": "Bastard2",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bastar2/ndriks/issues"
+  },
+  "homepage": "https://github.com/Bastar2/ndriks#readme",
+  "dependencies": {
+    "dont-sniff-mimetype": "^1.1.0",
+    "express": "^4.17.1"
+  }
+}

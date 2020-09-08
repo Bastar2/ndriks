@@ -1,6 +1,6 @@
 window.onload = function() {
     const numberWPP = 5492612083385;
-    const requestURL = 'http://localhost/Proyectos/NAHUEL/listaBebidas.json';
+    const requestURL = '/lista';
     const xhttp = new XMLHttpRequest();
     xhttp.open('GET', requestURL);
     xhttp.responseType = 'json';
