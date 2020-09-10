@@ -7,13 +7,12 @@ window.onload = function() {
     xhttp.send();
 
     xhttp.onload = function() {
-        let lista = xhttp.response;
+        const lista = xhttp.response;
         let indexCountBebidas = lista.length;
         let pagination =  (indexCountBebidas/9);
         let flag = 9;
         
         //PAGINATION LOAD
-        $("#badgeCounter").hide();
         $("#containerDinks").show();
         $("#paginationNumber").show();
         let paginatioNumber = document.getElementById("paginationNumber");
@@ -105,6 +104,7 @@ window.onload = function() {
             let cant = lista[i].cantidadBulto;
             let detalle = lista[i].detalle;
             let srcImg = lista[i].src;
+            let id = lista[i].id;
             
             if((i%9) == 0){
                 let paginationContainer = document.createElement("div");
@@ -165,6 +165,7 @@ window.onload = function() {
             cardImg.classList.add("mt-3");
             cardImg.classList.add("mb-3");
             cardImg.classList.add("img-fluid");
+            cardImg.setAttribute("style"," height: auto;");
             if(srcImg){
                 cardImg.setAttribute("src",srcImg);
             }else{
@@ -206,10 +207,10 @@ window.onload = function() {
             cardH5.innerHTML = name;
 
             cardP1.classList.add("card-text");
-            cardP1.innerHTML = "Precio Unidad: $"+price;
+            cardP1.innerHTML = "Precio Unidad: &#x20B1;"+price;
 
             cardP2.classList.add("card-text");
-            cardP2.innerHTML = "Precio Cantidad: $"+priceCant+" (MNIMO "+cant+")";
+            cardP2.innerHTML = "Precio Cantidad: &#x20B1;"+priceCant+" (MNIMO "+cant+")";
 
             cardP3.classList.add("card-text");
             cardP3.setAttribute("id","cardDinamycP"+i);
@@ -222,156 +223,100 @@ window.onload = function() {
 
             let cardSmall = document.createElement("small");
             cardSmall.classList.add("text-muted");
+            cardSmall.classList.add("m-3");
             cardSmall.innerHTML = detalle;
 
             document.getElementById("cardDinamycP"+i).appendChild(cardSmall);
 
-            //DIV CANTIDAD ROW
-            let divCant = document.createElement("div");
-            divCant.classList.add("input-group");
-            divCant.classList.add("row");
-            divCant.classList.add("p-3");
-            divCant.classList.add("justify-content-md-center");
-            divCant.setAttribute("id","cantUnidad-"+i);
-             
-            divCant.innerHTML;
-            document.getElementById("cardDinamycColX-"+i).appendChild(divCant);
+            //BUTTON ADD CARRITO
+            let btnAddCarrito = document.createElement("button");
+            btnAddCarrito.classList.add("btn", "btn-outline-dark", "float-right", "mb-3");
+            btnAddCarrito.setAttribute("marcador", i)
+            btnAddCarrito.setAttribute("type","button");
+            btnAddCarrito.addEventListener("click", addCarrito);
+            
+            btnAddCarrito.innerHTML = "<i class='fas fa-plus' 'style='font-size:36px;'></i>";
+            document.getElementById("cardDinamycP"+i).appendChild(btnAddCarrito);        
+        }
+    
+        //CARRITO
+        let carrito = [];
+        let total = 0;
+        //ADD TO CARRITO
+        function addCarrito(){
+            carrito.push(this.getAttribute('marcador'));
 
-            //BUTTON LEFT
-            let btnMenos = document.createElement("button");
-            btnMenos.classList.add("class","btn");+
-            btnMenos.classList.add("class","btn-outline-secondary");
-            btnMenos.setAttribute("type","button");
-            btnMenos.setAttribute("id","CantMasBtn-"+i);
+            calcularTotal();
+            renderizarCarrito();
+        };
 
-            btnMenos.innerHTML = "<i class='fas fa-minus' style='font-size:36px;'></i>";
-            document.getElementById("cantUnidad-"+i).appendChild(btnMenos);
+        function renderizarCarrito() {
+            document.getElementById("carrito").textContent = '';
+            let carritoSinDuplicados = [...new Set(carrito)];
 
-            //INPUT NUMBER
-            let divTextNumber = document.createElement("div");
-            divTextNumber.classList.add("class","col-6");
-            divTextNumber.classList.add("class","p-3");
-            divTextNumber.classList.add("class","bg-light");
-            divTextNumber.classList.add("class","text-dark");
-            divTextNumber.classList.add("class","text-center");
-            divTextNumber.setAttribute("id","cantNumber");
+            // Generamos los Nodos a partir de carrito
+            carritoSinDuplicados.forEach(function (item, indice) {
+                // Obtenemos el item que necesitamos de la variable base de datos
+                let miItem = lista.filter(function(itemLista) {
+                    return itemLista['id'] == item;
+                });
+                // Cuenta el número de veces que se repite el producto
+                let numeroUnidadesItem = carrito.reduce(function (total, itemId) {
+                    return itemId === item ? total += 1 : total;
+                }, 0);
+                // Creamos el nodo del item del carrito
+                let miNodo = document.createElement('li');
+                miNodo.classList.add('list-group-item', 'text-right', 'mx-2');                
+                miNodo.textContent = `${numeroUnidadesItem} x ${miItem[0]['nombreProducto']} - ${miItem[0]['unidadPrecio']} ₱`;
+                // Boton de borrar
+                let miBoton = document.createElement('button');
+                miBoton.classList.add('btn', 'btn-outline-danger', 'mx-5');
+                miBoton.setAttribute("id","btnList");
+                miBoton.setAttribute('item', item);
+                miBoton.innerHTML = "<i class='fas fa-times' 'style='font-size:36px;'></i>";
+                miBoton.style.marginLeft = '1rem';
+                miBoton.addEventListener('click', borrarItemCarrito);
+                miNodo.appendChild(miBoton);
+                document.getElementById("carrito").appendChild(miNodo);
 
-            divTextNumber.innerHTML = "0";
-            document.getElementById("cantUnidad-"+i).appendChild(divTextNumber);
-            //BUTTON RIGTH
-            let btnMas = document.createElement("button");
-            btnMas.classList.add("class","btn");+
-            btnMas.classList.add("class","btn-outline-secondary");
-            btnMas.setAttribute("type","button");
-            btnMas.setAttribute("id","CantMasBtn-"+i);
 
-            btnMas.innerHTML = "<i class='fas fa-plus' style='font-size:36px;'></i>";
-            document.getElementById("cantUnidad-"+i).appendChild(btnMas);
-            //CREATE CARD CONTENT --> END          
+            })
+            let badge = document.getElementById("badge");
+            badge.textContent = carrito.length;
+        }
+    
+        function borrarItemCarrito() {
+            let id = this.getAttribute('item');
+            carrito = carrito.filter(function (carritoId) {
+                return carritoId !== id;
+            });
+            renderizarCarrito();
+            calcularTotal();
+        }
+        
+        //TOTAL CARRITO
+        function calcularTotal() {
+            total = 0;
+
+            for (let item of carrito) {
+                let miItem = lista.filter(function(itemLista) {
+                    return itemLista['id'] == item;
+                });
+                total += miItem[0]['unidadPrecio'];
+            }
+            let totalDosDecimales = total.toFixed(2);
+            document.getElementById("total").textContent = totalDosDecimales;
+        }
+        //VACIAR CARRITO
+        function vaciarCarrito() {
+            carrito = [];
+            renderizarCarrito();
+            calcularTotal();
         }
 
-        //DINAMIC CALL BY STOCK COUNT PROMOCIONES
-        $("#containerPromotions").hide();
-        let divDinamycLaodPromociones = document.getElementById("dinamyc-load-promociones");
-        let indexCountPromociones = 15;
-        for (let i=0 ; i<indexCountPromociones ; i++){
-            //CREATE CARD CONTAINER --> BEGING
-            let cardDiv = document.createElement("div");
-            cardDiv.classList.add("card");
-            cardDiv.classList.add("m-3");
-            cardDiv.classList.add("border-success");
-            cardDiv.classList.add("text-success");
-            cardDiv.setAttribute("style", "max-width: 540px;")
-            cardDiv.setAttribute("id","cardDinamycPromociones-"+i);
-
-            cardDiv.addEventListener("mouseover", function hover() {
-                cardDiv.setAttribute("class","card m-3  bg-success text-white");
-                cardDiv.setAttribute("style", "max-width: 540px;");
-            }, false);
-
-            cardDiv.addEventListener("mouseout", function after() {
-                cardDiv.setAttribute("class","card m-3 border-success text-success");
-                cardDiv.setAttribute("style", "max-width: 540px;");
-            }, false);
-            
-            cardDiv.innerHTML;
-            divDinamycLaodPromociones.appendChild(cardDiv);
-            //CREATE CARD CONTAINER --> END
-
-            //CREATE CARD ROW --> BEGING
-            let cardDivRow =  document.createElement("div");
-            cardDivRow.classList.add("row");
-            cardDivRow.classList.add("no-gutters");
-            cardDivRow.setAttribute("id","cardDinamycRowPromociones-"+i);
-
-            cardDivRow.innerHTML;
-            document.getElementById("cardDinamycPromociones-"+i).appendChild(cardDivRow);
-            //CREATE CARD ROW --> END
-
-            //CREATE CARD COL --> BEGING
-            let cardDivCol =  document.createElement("div");
-            cardDivCol.classList.add("col-md-4");
-            cardDivCol.setAttribute("id","cardDinamycColPromociones-"+i);
-            cardDivCol.innerHTML;
-            document.getElementById("cardDinamycRowPromociones-"+i).appendChild(cardDivCol);
-            //CREATE CARD COL --> END
-            
-            //CREATE CARD IMG --> BEGING
-            let cardImg =  document.createElement("img");
-            cardImg.classList.add("card-img");
-            cardImg.setAttribute("src","");
-            cardImg.setAttribute("alt","...");
-            
-            cardImg.innerHTML;
-            document.getElementById("cardDinamycColPromociones-"+i).appendChild(cardImg);
-            //CREATE CARD IMG --> END
-            
-            //CREATE CARD COL --> BEGING
-            let cardDivColX =  document.createElement("div");
-            cardDivColX.classList.add("col-md-8");
-            cardDivColX.setAttribute("id","cardDinamycColXPromociones-"+i);
-
-            cardDivColX.innerHTML;
-            document.getElementById("cardDinamycRowPromociones-"+i).appendChild(cardDivColX);
-            //CREATE CARD COL --> END
-
-            
-            //CREATE CARD BODY --> BEGING
-            let cardBody = document.createElement("div");
-            cardBody.classList.add("card-body");
-            cardBody.setAttribute("id","cardDinamycColBodyPromociones-"+i);
-
-            cardBody.innerHTML;
-            document.getElementById("cardDinamycColXPromociones-"+i).appendChild(cardBody);
-            //CREATE CARD BODY --> END
-
-            //CREAtE CARD CONTENT --> BEGING
-            let cardH5 = document.createElement("h5");
-            let cardP1 = document.createElement("p");
-            let cardP2 = document.createElement("p");
-
-            cardH5.classList.add("card-title");
-            cardH5.innerHTML = "THE TITLE CARD";
-
-            cardP1.classList.add("card-text");
-            cardP1.innerHTML = "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.";
-
-            cardP2.classList.add("card-text");
-            cardP2.setAttribute("id","cardDinamycPromociones"+i);
-            cardP2.innerHTML;
-
-            document.getElementById("cardDinamycColBodyPromociones-"+i).appendChild(cardH5);
-            document.getElementById("cardDinamycColBodyPromociones-"+i).appendChild(cardP1);
-            document.getElementById("cardDinamycColBodyPromociones-"+i).appendChild(cardP2);
-
-            let cardSmall = document.createElement("small");
-            cardSmall.classList.add("text-muted");
-            cardSmall.innerHTML = "Last updated 3 mins ago";
-
-            document.getElementById("cardDinamycPromociones"+i).appendChild(cardSmall);
-            //CREAtE CARD CONTENT --> END
-        }
-
+        // Eventos
+        document.getElementById("boton-vaciar").addEventListener('click', vaciarCarrito);
+        
         //SHOW BEBIDAS HIDE REST
         document.getElementById("drinks").addEventListener("click", 
             function showDriks() {
@@ -406,7 +351,7 @@ window.onload = function() {
         );
     }
 
-        //NAV BAR ICON AND NAME
+    //NAV BAR ICON AND NAME
         $(".navbar-brand").click(function(){
             $("#containerDinks").show();
             $("#containerPromotions").hide();
@@ -444,19 +389,134 @@ window.onload = function() {
 
         showPage(0);
     }, 500);
-
-    //CARRITO
-    
-    //VACIAR CARRITO
-
-    //MODAL ADD TO CARRITO
     
     //MODAL TEXT INFORMATION
-    let mesaje = "";
+    document.getElementById("boton-pedir").addEventListener("click", function(){
+        $('#staticBackdrop').modal('show');
+    })
+    
+    //MODAL PEDIR
+    document.getElementById("pedir").addEventListener("click", function(){
+        let text = "";
+        let name = document.getElementById("name").value;
+        let adress = document.getElementById("adress").value;
+        let money = document.getElementById("money").value;
+        let comment = document.getElementById("comment").value;
+        if(comment){    comment = "Ninguno"};
 
-    //SEND WPP MESAJE
-    $("#WPP").click(function(){
-        window.location.assign("https://wa.me/"+numberWPP+"/?text="+mesaje);
-    });
+        let listUl = document.getElementById("carrito");
+        let listLi = listUl.getElementsByTagName("li");
+        let listText = "";
+
+        for(let i=0; i<listLi.length; i++){
+            listText += listLi[i].textContent;
+            listText += "%0A";
    
+        };
+        text = name + " con direccion en: "+ adress+"."+"%0A"+"Paga con : "+ money+ "." +"%0A" + listText + "%0A" + "COMENTARIOS : " + comment;
+        encodeURI(text);
+        window.location.assign("https://wa.me/"+numberWPP+"/?text="+text);
+    });
+ 
+     //DINAMIC CALL BY STOCK COUNT PROMOCIONES
+     $("#containerPromotions").hide();
+     let divDinamycLaodPromociones = document.getElementById("dinamyc-load-promociones");
+     let indexCountPromociones = 15;
+     for (let i=0 ; i<indexCountPromociones ; i++){
+         //CREATE CARD CONTAINER --> BEGING
+         let cardDiv = document.createElement("div");
+         cardDiv.classList.add("card");
+         cardDiv.classList.add("m-3");
+         cardDiv.classList.add("border-success");
+         cardDiv.classList.add("text-success");
+         cardDiv.setAttribute("style", "max-width: 540px;")
+         cardDiv.setAttribute("id","cardDinamycPromociones-"+i);
+
+         cardDiv.addEventListener("mouseover", function hover() {
+             cardDiv.setAttribute("class","card m-3  bg-success text-white");
+             cardDiv.setAttribute("style", "max-width: 540px;");
+         }, false);
+
+         cardDiv.addEventListener("mouseout", function after() {
+             cardDiv.setAttribute("class","card m-3 border-success text-success");
+             cardDiv.setAttribute("style", "max-width: 540px;");
+         }, false);
+         
+         cardDiv.innerHTML;
+         divDinamycLaodPromociones.appendChild(cardDiv);
+         //CREATE CARD CONTAINER --> END
+
+         //CREATE CARD ROW --> BEGING
+         let cardDivRow =  document.createElement("div");
+         cardDivRow.classList.add("row");
+         cardDivRow.classList.add("no-gutters");
+         cardDivRow.setAttribute("id","cardDinamycRowPromociones-"+i);
+
+         cardDivRow.innerHTML;
+         document.getElementById("cardDinamycPromociones-"+i).appendChild(cardDivRow);
+         //CREATE CARD ROW --> END
+
+         //CREATE CARD COL --> BEGING
+         let cardDivCol =  document.createElement("div");
+         cardDivCol.classList.add("col-md-4");
+         cardDivCol.setAttribute("id","cardDinamycColPromociones-"+i);
+         cardDivCol.innerHTML;
+         document.getElementById("cardDinamycRowPromociones-"+i).appendChild(cardDivCol);
+         //CREATE CARD COL --> END
+         
+         //CREATE CARD IMG --> BEGING
+         let cardImg =  document.createElement("img");
+         cardImg.classList.add("card-img");
+         cardImg.setAttribute("src","");
+         cardImg.setAttribute("alt","...");
+         
+         cardImg.innerHTML;
+         document.getElementById("cardDinamycColPromociones-"+i).appendChild(cardImg);
+         //CREATE CARD IMG --> END
+         
+         //CREATE CARD COL --> BEGING
+         let cardDivColX =  document.createElement("div");
+         cardDivColX.classList.add("col-md-8");
+         cardDivColX.setAttribute("id","cardDinamycColXPromociones-"+i);
+
+         cardDivColX.innerHTML;
+         document.getElementById("cardDinamycRowPromociones-"+i).appendChild(cardDivColX);
+         //CREATE CARD COL --> END
+
+         
+         //CREATE CARD BODY --> BEGING
+         let cardBody = document.createElement("div");
+         cardBody.classList.add("card-body");
+         cardBody.setAttribute("id","cardDinamycColBodyPromociones-"+i);
+
+         cardBody.innerHTML;
+         document.getElementById("cardDinamycColXPromociones-"+i).appendChild(cardBody);
+         //CREATE CARD BODY --> END
+
+         //CREAtE CARD CONTENT --> BEGING
+         let cardH5 = document.createElement("h5");
+         let cardP1 = document.createElement("p");
+         let cardP2 = document.createElement("p");
+
+         cardH5.classList.add("card-title");
+         cardH5.innerHTML = "THE TITLE CARD";
+
+         cardP1.classList.add("card-text");
+         cardP1.innerHTML = "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.";
+
+         cardP2.classList.add("card-text");
+         cardP2.setAttribute("id","cardDinamycPromociones"+i);
+         cardP2.innerHTML;
+
+         document.getElementById("cardDinamycColBodyPromociones-"+i).appendChild(cardH5);
+         document.getElementById("cardDinamycColBodyPromociones-"+i).appendChild(cardP1);
+         document.getElementById("cardDinamycColBodyPromociones-"+i).appendChild(cardP2);
+
+         let cardSmall = document.createElement("small");
+         cardSmall.classList.add("text-muted");
+         cardSmall.innerHTML = "Last updated 3 mins ago";
+
+         document.getElementById("cardDinamycPromociones"+i).appendChild(cardSmall);
+         //CREAtE CARD CONTENT --> END
+     }
 };

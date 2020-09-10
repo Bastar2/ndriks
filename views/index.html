@@ -37,8 +37,8 @@
                               <a id="contact" class="nav-link" href="#">CONTACTO</a>
                             </li>
                           </ul>
-                          <button type="button" class="btn btn-primary m3" id="badgeCounter">
-                            Productos <span class="badge badge-light"></span>
+                          <button type="button" class="btn btn-dark m3" id="badgeCounter">
+                            Carrito <span id="badge" class="badge badge-light">0</span>
                           </button>
                         </div>
                       </nav>
@@ -73,6 +73,20 @@
             </div>
         </div>
 
+        <div class="container">
+          <div class="row justify-content-md-center">
+            <div class="col">
+              <aside>
+                 <h1>CARRITO</h1>
+                 <ul id="carrito" class="list-group"></ul>
+                 <p class="text-right m-3">Total: <span id="total"></span> &#x20B1; </p>
+                 <button id="boton-pedir" class="btn btn-success float-right ml-3 mr-3">Pedir</button>
+                 <button id="boton-vaciar" class="btn btn-danger float-right mr-3">Vaciar Carrito</button>
+              </aside>
+            </div>
+          </div>
+        </div>
+
         <!-- MODAL CLIENT-->
         <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -84,18 +98,31 @@
                 </button>
               </div>
               <div class="modal-body" id="bodyClient">
-                ...
+                <div class="container">
+                  <div class="row justify-content-md-center">
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" id="name" minlength="4" maxlength="25" placeholder="Nombre y Apellido..." autofocus="autofocus" required>
+                    </div>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" id="adress" minlength="4" maxlength="25" placeholder="Direccion..." required>
+                    </div>
+                    <div class="input-group mb-3"> 
+                      <input type="number" class="form-control" id="money" min="0" max="50000" placeholder="Con cuanto pagas..." required>
+                    </div>
+                    <div class="input-group mb3">
+                      
+                      <textarea class="form-control" minlength="0" maxlength="200" aria-label="With textarea" id="comment" placeholder="Aclaraciones y/o comentarios"></textarea>
+                    </div>
+                </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-                <button type="button" class="btn btn-primary">Comprar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Salir</button>
+                <button type="button" class="btn btn-success" id="pedir">Comprar</button>
               </div>
             </div>
           </div>
         </div>
 
-        <a href="#" id="WPP"></a>
-        <div id="modalAddbadge"></div>
         <footer></footer>
     </body>
 </html>

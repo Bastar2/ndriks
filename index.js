@@ -5,7 +5,7 @@ const noSniff = require('dont-sniff-mimetype');
 const path = require('path');
 
 //SETTINGS
-const port = process.env.PORT;
+let port = process.env.PORT;
     if (port == null || port == "") {
     port = 5000;
     }
