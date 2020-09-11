@@ -3,7 +3,7 @@
         <meta charset="utf-8" lang="es-ES">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title> MARCA NAHUEL </title>
-        <link rel="icon" type="image/png" href="/img/favIcon.png" sizes="48x48">
+        <link rel="icon" type="image/png" href="/img/logo.png" sizes="48x48">
         <!-- CSS only -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
         <!-- JS, Popper.js, and jQuery -->
@@ -13,148 +13,129 @@
         <script type="text/javascript" src='https://kit.fontawesome.com/a076d05399.js'></script>
         <script type="text/javascript" src="js/script.js"></script>    
     </head>
-    <body>
-      <div class="container-fluid">
-        <div class="row justify-content-md-center">
-          <div class="col text-center">
-            <img class="img-fluid" src="/img/bannerTop.png" style="max-height: 30px;" alt="">
+      <div class="container-md mt-3">
           <div class="row justify-content-md-center">
-          <div class="col text-center">
-            <img class="img-fluid" src="/img/banner.png" style="max-height: 150px;" alt="">
-          <div class="row justify-content-md-center">
-            <div class="col text-center">
-          <img class="img-fluid" src="/img/bannerBotton.png" style="max-height: 30px;" alt="">
-          </div>
-          </div>
-          </div>
-        </div>
-      </div>
-      </div>
-      </div>
-        <hr>
-        <div class="container-md mt-3">
-            <div class="row justify-content-md-center">
-                <div class="col">
-                    <nav class="navbar navbar-expand-lg navbar-light">
-                        <a class="navbar-brand" href="#">
-                            <img class="img-fluid"  src="/img/logo.png" alt="">
-                          </a>
-                        <a class="navbar-brand" href="#">NAHUEL DRINKS</a>
+              <div class="col">
+                  <nav class="navbar navbar-expand-lg navbar-light">
+                      <a class="navbar-brand" href="#">
+                        <img class="img-fluid"  src="/img/logo.png" alt="">
+                      </a>
+                      <a class="navbar-brand" href="#">NAHUEL DRINKS</a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                           <span class="navbar-toggler-icon"></span>
-                        </button>
-                      
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                          <ul class="navbar-nav mr-auto">
-                            <li class="nav-item active">
-                              <a id="drinks" class="nav-link" href="#">BEBIDAS <span class="sr-only">(current)</span></a>
-                            </li>
-                            <li class="nav-item">
-                              <a id="promotions" class="nav-link disabled" href="#">PROMOCIONES</a>
-                            </li>
-                            <li class="nav-item">
-                              <a id="contact" class="nav-link disabled" href="#">CONTACTO</a>
-                            </li>
-                          </ul>
-                        </div>
-                      </nav>
-                           
-                </div>
-            </div>  
-        </div>
-
-        <div  id="containerDinks" class="container-md">
-            <div class="row justify-content-md-center"  id="dinamyc-load-bebidas">
-            </div>
-        </div>
-
-        <div  id="containerPromotions" class="container-md">
-            <div class="row justify-content-md-center"  id="dinamyc-load-promociones">
-            </div>
-        </div>
- 
-        <div  id="containerContacts" class="container-md">
-            <div class="row justify-content-md-center" >
-            </div>
-        </div>
-
-        <div class="container-md">
-            <div class="row justify-content-md-center">
-                <div class="col">
-                    <nav>
-                        <ul class="pagination pg-teal justify-content-center mt-3" id="paginationNumber">
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </div>
-
-        <div class="container-md" id="idCarrito">
-          <div class="row justify-content-md-center">
-            <div class="col m-3">
-              <aside>
-                <div class="row">
-                  <div class="col-8">
-                    <h1 class="m-2">CARRITO</h1>
-                  </div>
-                  <div class="col-4 text-right p-3">
-                    <button type="button" class="btn btn-dark m3 shadow" id="badgeCounter">
-                      Carrito <span id="badge" class="badge badge-light">0</span>
                       </button>
-                  </div>
-                </div>
-                 <ul id="carrito" class="list-group"></ul>
-                 <p class="text-right m-3">Total: <span id="total"></span> &#x20B1; </p>
-                 <button id="boton-pedir" class="btn btn-success float-right ml-3 mr-3">Pedir</button>
-                 <button id="boton-vaciar" class="btn btn-danger float-right mr-3">Vaciar Carrito</button>
-              </aside>
-            </div>
-          </div>
-        </div>
+                    
+                      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                          <li class="nav-item active">
+                            <a id="drinks" class="nav-link" href="#">BEBIDAS <span class="sr-only">(current)</span></a>
+                          </li>
+                          <li class="nav-item">
+                            <a id="promotions" class="nav-link" href="#">PROMOCIONES</a>
+                          </li>
+                          <li class="nav-item">
+                            <a id="contact" class="nav-link" href="#">CONTACTO</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </nav>
+                          
+              </div>
+          </div>  
+      </div>
 
-        <!-- MODAL CLIENT-->
-        <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">REALIZAR PEDIDO</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
+      <div  id="containerDinks" class="container-md">
+          <div class="row justify-content-md-center"  id="dinamyc-load-bebidas">
+          </div>
+      </div>
+
+      <div  id="containerPromotions" class="container-md">
+          <div class="row justify-content-md-center"  id="dinamyc-load-promociones">
+          </div>
+      </div>
+
+      <div  id="containerContacts" class="container-md">
+          <div class="row justify-content-md-center" >
+          </div>
+      </div>
+
+      <div class="container-md">
+          <div class="row justify-content-md-center">
+              <div class="col">
+                  <nav>
+                      <ul class="pagination pg-teal justify-content-center mt-3" id="paginationNumber">
+                      </ul>
+                  </nav>
               </div>
-              <div class="modal-body" id="bodyClient">
-                <div class="container">
-                  <div class="row justify-content-md-center">
-                    <div class="input-group mb-3">
-                      <input type="text" class="form-control" id="name" minlength="4" maxlength="25" placeholder="Nombre y Apellido..." autofocus="autofocus" required>
-                    </div>
-                    <div id="divName" style="width: 100%;"></div>
-                    <div class="input-group mb-3">
-                      <input type="text" class="form-control" id="location" minlength="4" maxlength="30" placeholder="Localidad..." required>
-                    </div>
-                    <div id="divLocation" style="width: 100%;"></div>
-                    <div class="input-group mb-3">
-                      <input type="text" class="form-control" id="adress" minlength="4" maxlength="50" placeholder="Direccion..." required>
-                    </div>
-                    <div id="divAdress" style="width: 100%;"></div>
-                    <div class="input-group mb-3" > 
-                      <input type="number" class="form-control" id="money" min="0" max="50000" placeholder="Con cuanto pagas..." required>
-                    </div>
-                    <div id="divMoney" style="width: 100%;"></div>
-                    <div class="input-group mb3">
-                      <textarea class="form-control" minlength="0" maxlength="200" aria-label="With textarea" id="comment" placeholder="Aclaraciones y/o comentarios"></textarea>
-                    </div>
-                    <div class="p-3 m-3">ENVIO : 50 &#x20B1;</div>
+          </div>
+      </div>
+
+      <div class="container-md" id="idCarrito">
+        <div class="row justify-content-md-center">
+          <div class="col m-3">
+            <aside>
+              <div class="row">
+                <div class="col-8">
+                  <h1 class="m-2">CARRITO</h1>
+                </div>
+                <div class="col-4 text-right p-3">
+                  <button type="button" class="btn btn-dark m3 shadow" id="badgeCounter">
+                    Carrito <span id="badge" class="badge badge-light">0</span>
+                    </button>
                 </div>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Salir</button>
-                <button type="button" class="btn btn-success" id="pedir">Comprar</button>
-              </div>
-            </div>
+                <ul id="carrito" class="list-group"></ul>
+                <p class="text-right m-3">Total: <span id="total"></span> &#x20B1; </p>
+                <button id="boton-pedir" class="btn btn-success float-right ml-3 mr-3">Pedir</button>
+                <button id="boton-vaciar" class="btn btn-danger float-right mr-3">Vaciar Carrito</button>
+            </aside>
           </div>
         </div>
-      </div>   
-      <footer></footer>
+      </div>
+
+    <!-- MODAL CLIENT-->
+    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">REALIZAR PEDIDO</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="bodyClient">
+            <div class="container">
+              <div class="row justify-content-md-center">
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" id="name" minlength="4" maxlength="25" placeholder="Nombre y Apellido..." autofocus="autofocus" required>
+                </div>
+                <div id="divName" style="width: 100%;"></div>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" id="location" minlength="4" maxlength="30" placeholder="Localidad..." required>
+                </div>
+                <div id="divLocation" style="width: 100%;"></div>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" id="adress" minlength="4" maxlength="50" placeholder="Direccion..." required>
+                </div>
+                <div id="divAdress" style="width: 100%;"></div>
+                <div class="input-group mb-3" > 
+                  <input type="number" class="form-control" id="money" min="0" max="50000" placeholder="Con cuanto pagas..." required>
+                </div>
+                <div id="divMoney" style="width: 100%;"></div>
+                <div class="input-group mb3">
+                  <textarea class="form-control" minlength="0" maxlength="200" aria-label="With textarea" id="comment" placeholder="Aclaraciones y/o comentarios"></textarea>
+                </div>
+                <div class="p-3 m-3">ENVIO : 50 &#x20B1;</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Salir</button>
+            <button type="button" class="btn btn-success" id="pedir">Comprar</button>
+          </div>
+        </div>
+      </div>
+     </div>
+    </div>   
+    <footer></footer>
     </body>
 </html>
