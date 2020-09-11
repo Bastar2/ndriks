@@ -9,8 +9,7 @@ window.onload = function() {
     xhttp.onload = function() {
         const lista = xhttp.response;
         let indexCountBebidas = lista.length;
-        let pagination =  (indexCountBebidas/9);
-        let flag = 9;
+        let pagination =  (indexCountBebidas/10);
         
         //PAGINATION LOAD
         $("#containerDinks").show();
@@ -104,17 +103,16 @@ window.onload = function() {
             let cant = lista[i].cantidadBulto;
             let detalle = lista[i].detalle;
             let srcImg = lista[i].src;
-            let id = lista[i].id;
             
-            if((i%9) == 0){
+            if((i%10) == 0){
                 let paginationContainer = document.createElement("div");
                 paginationContainer.setAttribute("class", "row justify-content-md-center");
                 paginationContainer.setAttribute("name", "paginationContainer");
-                paginationContainer.setAttribute("id", "paginationContainer-"+(i/9));
+                paginationContainer.setAttribute("id", "paginationContainer-"+(i/10));
                 paginationContainer.innerHTML;
                 
                 divDinamycLaodBebidas.append(paginationContainer);
-                auxiliarPagination = (i/9);
+                auxiliarPagination = (i/10);
             };
 
             //CREATE CARD CONTAINER --> BEGING
@@ -123,17 +121,17 @@ window.onload = function() {
             cardDiv.classList.add("col-12");
             cardDiv.classList.add("m-3");
             cardDiv.classList.add("border-secondary");
-            cardDiv.setAttribute("style", "max-width: 540px;")
+            cardDiv.setAttribute("style", "max-width: 530px;")
             cardDiv.setAttribute("id","cardDinamyc-"+i);
             
             cardDiv.addEventListener("mouseover", function hover() {
                 cardDiv.setAttribute("class","col-12 card m-3 bg-light");
-                cardDiv.setAttribute("style", "max-width: 540px;");
+                cardDiv.setAttribute("style", "max-width: 530px;");
             }, false);
 
             cardDiv.addEventListener("mouseout", function after() {
                 cardDiv.setAttribute("class","col-12 card m-3 border-secondary");
-                cardDiv.setAttribute("style", "max-width: 540px;");
+                cardDiv.setAttribute("style", "max-width: 530px;");
             }, false);
 
             cardDiv.innerHTML;
@@ -555,7 +553,7 @@ window.onload = function() {
      function validationMoney(money,total){
         document.getElementById("money").setAttribute("min",(total+50));
         if(money>=(total+50)){
-            $("#alertMoney").alert("close");
+            $("#alertMoney").hide();
             return true;
         }else{
             if(falgAlertMoney===0){
@@ -566,27 +564,20 @@ window.onload = function() {
             alert.innerHTML = "El valor tiene que ser igual o mayor...";
             document.getElementById("divMoney").append(alert);
 
-            let btnAlert = document.createElement("button");
-            btnAlert.setAttribute("type", "button");
-            btnAlert.setAttribute("class", "close");
-            btnAlert.setAttribute("data-dismiss", "alert");
-            btnAlert.setAttribute("aria-label", "close");
-            btnAlert.innerHTML = "<span aria-hidden='true'>&times;</span>";
-            document.getElementById("alertMoney").append(btnAlert);
-
             falgAlertMoney++;
             }
+            $("#alertMoney").show();
             return false;
         }
     }
 
-    let falgAlertName=0;
+    let flagAlertName=0;
     function validationName(name){
        if(name !== "" && name.length>3){
-           $("#alertName").alert("close");
+           $("#alertName").hide();
            return true;
        }else{
-           if(falgAlertName===0){
+           if(flagAlertName===0){
            let alert = document.createElement("div");
            alert.classList.add("alert", "alert-danger", "alert-dismissible", "fade", "show");
            alert.setAttribute("role","alert");
@@ -594,27 +585,20 @@ window.onload = function() {
            alert.innerHTML = "Campo obligatorio...";
            document.getElementById("divName").append(alert);
 
-           let btnAlert = document.createElement("button");
-           btnAlert.setAttribute("type", "button");
-           btnAlert.setAttribute("class", "close");
-           btnAlert.setAttribute("data-dismiss", "alert");
-           btnAlert.setAttribute("aria-label", "close");
-           btnAlert.innerHTML = "<span aria-hidden='true'>&times;</span>";
-           document.getElementById("alertName").append(btnAlert);
-
-           falgAlertName++;
+           flagAlertName++;
            }
+           $("#alertName").show();
            return false;
        }
    }
 
-   let falgAlertLocation=0;
+   let flagAlertLocation=0;
    function validationLocation(location){
       if(location !== "" && location.length>3){
-          $("#alertLocation").alert("close");
+          $("#alertLocation").hide();
           return true;
       }else{
-          if(falgAlertLocation===0){
+          if(flagAlertLocation===0){
           let alert = document.createElement("div");
           alert.classList.add("alert", "alert-danger", "alert-dismissible", "fade", "show");
           alert.setAttribute("role","alert");
@@ -622,44 +606,30 @@ window.onload = function() {
           alert.innerHTML = "Campo obligatorio...";
           document.getElementById("divLocation").append(alert);
 
-          let btnAlert = document.createElement("button");
-          btnAlert.setAttribute("type", "button");
-          btnAlert.setAttribute("class", "close");
-          btnAlert.setAttribute("data-dismiss", "alert");
-          btnAlert.setAttribute("aria-label", "close");
-          btnAlert.innerHTML = "<span aria-hidden='true'>&times;</span>";
-          document.getElementById("alertLocation").append(btnAlert);
-
-          falgAlertLocation++;
+          flagAlertLocation++;
           }
+          $("#alertLocation").show();
           return false;
       }
   }
 
-  let falgAlertAdress=0;
+  let flagAlertAdress=0;
   function validationAdress(adress){
      if(adress !== "" && adress.length>3){
-         $("#alertAdress").alert("close");
+         $("#alertAdress").hide();
          return true;
      }else{
-         if(falgAlertAdress===0){
+         if(flagAlertAdress===0){
          let alert = document.createElement("div");
-         alert.classList.add("alert", "alert-danger", "alert-dismissible", "fade", "show");
+         alert.classList.add("alert", "alert-danger", "fade", "show");
          alert.setAttribute("role","alert");
          alert.setAttribute("id","alertAdress");
          alert.innerHTML = "Campo obligatorio...";
          document.getElementById("divAdress").append(alert);
 
-         let btnAlert = document.createElement("button");
-         btnAlert.setAttribute("type", "button");
-         btnAlert.setAttribute("class", "close");
-         btnAlert.setAttribute("data-dismiss", "alert");
-         btnAlert.setAttribute("aria-label", "close");
-         btnAlert.innerHTML = "<span aria-hidden='true'>&times;</span>";
-         document.getElementById("alertAdress").append(btnAlert);
-
-         falgAlertAdress++;
+         flagAlertAdress++;
          }
+         $("#alertAdress").show();
          return false;
      }
  }

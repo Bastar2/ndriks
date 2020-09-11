@@ -7,5 +7,9 @@ const reqPath = path.join(__dirname, '../');
 api.get('/', (req, res) => {
     res.sendFile(reqPath+'views/index.html');
 });
+api.get('/*', (req, res) => {
+    res.send('PAGE NOT FOUND...');
+});
+
 
 module.exports = api;
