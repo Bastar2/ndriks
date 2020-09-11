@@ -231,7 +231,7 @@ window.onload = function() {
             //BUTTON ADD CARRITO
             let btnAddCarrito = document.createElement("button");
             btnAddCarrito.classList.add("btn", "btn-outline-dark", "float-right", "mb-3");
-            btnAddCarrito.setAttribute("marcador", i)
+            btnAddCarrito.setAttribute("marcador",(i+1))
             btnAddCarrito.setAttribute("type","button");
             btnAddCarrito.addEventListener("click", addCarrito);
             
@@ -266,8 +266,14 @@ window.onload = function() {
                 }, 0);
                 // Creamos el nodo del item del carrito
                 let miNodo = document.createElement('li');
-                miNodo.classList.add('list-group-item', 'text-right', 'mx-2');                
-                miNodo.textContent = `${numeroUnidadesItem} x ${miItem[0]['nombreProducto']} - ${miItem[0]['unidadPrecio']} ₱`;
+                miNodo.classList.add('list-group-item', 'text-right', 'mx-2');
+                
+                if(numeroUnidadesItem >= miItem[0]['cantidadBulto']){
+                    miNodo.textContent = `${numeroUnidadesItem} x ${miItem[0]['nombreProducto']} - ${miItem[0]['unidadPrecioBulto']} ₱`;
+                }else {
+                    miNodo.textContent = `${numeroUnidadesItem} x ${miItem[0]['nombreProducto']} - ${miItem[0]['unidadPrecio']} ₱`;
+                }
+
                 // Boton de borrar
                 let miBoton = document.createElement('button');
                 miBoton.classList.add('btn', 'btn-outline-danger', 'mx-5');
@@ -297,13 +303,21 @@ window.onload = function() {
         //TOTAL CARRITO
         function calcularTotal() {
             total = 0;
-
-            for (let item of carrito) {
-                let miItem = lista.filter(function(itemLista) {
-                    return itemLista['id'] == item;
-                });
+            carrito.forEach(function (item, indice) {
+            // Obtenemos el item que necesitamos de la variable base de datos
+            let miItem = lista.filter(function(itemLista) {
+                return itemLista['id'] == item;
+            });
+            // Cuenta el número de veces que se repite el producto
+            let numeroUnidadesItem = carrito.reduce(function (total, itemId) {
+                return itemId === item ? total += 1 : total;
+            }, 0);
+            if(numeroUnidadesItem >= miItem[0]['cantidadBulto']){
+                total += miItem[0]['unidadPrecioBulto'];
+            }else{
                 total += miItem[0]['unidadPrecio'];
             }
+            });
             let totalDosDecimales = total.toFixed(2);
             document.getElementById("total").textContent = totalDosDecimales;
         }
@@ -325,6 +339,7 @@ window.onload = function() {
                 $("#containerContacts").hide();
                 $("#containerBtns").hide();
                 $("#paginationNumber").show();
+                $("#idCarrito").show();
             }
         );
 
@@ -336,6 +351,7 @@ window.onload = function() {
                 $("#containerContacts").hide();
                 $("#containerBtns").hide();
                 $("#paginationNumber").hide();
+                $("#idCarrito").show();
             }
         );
 
@@ -347,6 +363,7 @@ window.onload = function() {
                 $("#containerContacts").show();
                 $("#containerBtns").hide();
                 $("#paginationNumber").hide();
+                $("#idCarrito").hide();
             }
         );
     }
@@ -358,6 +375,7 @@ window.onload = function() {
             $("#containerContacts").hide();
             $("#containerBtns").hide();
             $("#paginationNumber").show();
+            $("#idCarrito").show();
         });
 
     //FUNCION PAGINATION 
@@ -399,23 +417,36 @@ window.onload = function() {
     document.getElementById("pedir").addEventListener("click", function(){
         let text = "";
         let name = document.getElementById("name").value;
+        let location = document.getElementById("location").value;
         let adress = document.getElementById("adress").value;
         let money = document.getElementById("money").value;
-        let comment = document.getElementById("comment").value;
-        if(comment){    comment = "Ninguno"};
+        let comment = document.getElementById("comment").value
+        let total = document.getElementById("total").innerHTML;
+        let totalDelivery = 50 + parseInt(total);
 
         let listUl = document.getElementById("carrito");
         let listLi = listUl.getElementsByTagName("li");
         let listText = "";
+
+        if(total === ""){ total = 0.00;}
+        let boolMoney = validationMoney(parseInt(money),parseInt(total));
+        let boolName = validationName(name);
+        let boolLocation = validationLocation(location);
+        let boolAdress = validationAdress(adress);
 
         for(let i=0; i<listLi.length; i++){
             listText += listLi[i].textContent;
             listText += "%0A";
    
         };
-        text = name + " con direccion en: "+ adress+"."+"%0A"+"Paga con : "+ money+ "." +"%0A" + listText + "%0A" + "COMENTARIOS : " + comment;
+
+        text = name + " con direccion en: "+adress+" - "+location+"."+"%0A"+"Paga con : "+money+"."+"%0A"+listText+"%0A"+"COMENTARIOS : "+comment+"%0A%0A"+"Total Pedido: "+totalDelivery;
         encodeURI(text);
-        window.location.assign("https://wa.me/"+numberWPP+"/?text="+text);
+        if(boolMoney && boolName && boolLocation && boolAdress){
+            window.location.assign("https://wa.me/"+numberWPP+"/?text="+text);
+        }
+
+
     });
  
      //DINAMIC CALL BY STOCK COUNT PROMOCIONES
@@ -519,4 +550,118 @@ window.onload = function() {
          document.getElementById("cardDinamycPromociones"+i).appendChild(cardSmall);
          //CREAtE CARD CONTENT --> END
      }
+
+     let falgAlertMoney=0;
+     function validationMoney(money,total){
+        document.getElementById("money").setAttribute("min",(total+50));
+        if(money>=(total+50)){
+            $("#alertMoney").alert("close");
+            return true;
+        }else{
+            if(falgAlertMoney===0){
+            let alert = document.createElement("div");
+            alert.classList.add("alert", "alert-danger", "alert-dismissible", "fade", "show");
+            alert.setAttribute("role","alert");
+            alert.setAttribute("id","alertMoney");
+            alert.innerHTML = "El valor tiene que ser igual o mayor...";
+            document.getElementById("divMoney").append(alert);
+
+            let btnAlert = document.createElement("button");
+            btnAlert.setAttribute("type", "button");
+            btnAlert.setAttribute("class", "close");
+            btnAlert.setAttribute("data-dismiss", "alert");
+            btnAlert.setAttribute("aria-label", "close");
+            btnAlert.innerHTML = "<span aria-hidden='true'>&times;</span>";
+            document.getElementById("alertMoney").append(btnAlert);
+
+            falgAlertMoney++;
+            }
+            return false;
+        }
+    }
+
+    let falgAlertName=0;
+    function validationName(name){
+       if(name !== "" && name.length>3){
+           $("#alertName").alert("close");
+           return true;
+       }else{
+           if(falgAlertName===0){
+           let alert = document.createElement("div");
+           alert.classList.add("alert", "alert-danger", "alert-dismissible", "fade", "show");
+           alert.setAttribute("role","alert");
+           alert.setAttribute("id","alertName");
+           alert.innerHTML = "Campo obligatorio...";
+           document.getElementById("divName").append(alert);
+
+           let btnAlert = document.createElement("button");
+           btnAlert.setAttribute("type", "button");
+           btnAlert.setAttribute("class", "close");
+           btnAlert.setAttribute("data-dismiss", "alert");
+           btnAlert.setAttribute("aria-label", "close");
+           btnAlert.innerHTML = "<span aria-hidden='true'>&times;</span>";
+           document.getElementById("alertName").append(btnAlert);
+
+           falgAlertName++;
+           }
+           return false;
+       }
+   }
+
+   let falgAlertLocation=0;
+   function validationLocation(location){
+      if(location !== "" && location.length>3){
+          $("#alertLocation").alert("close");
+          return true;
+      }else{
+          if(falgAlertLocation===0){
+          let alert = document.createElement("div");
+          alert.classList.add("alert", "alert-danger", "alert-dismissible", "fade", "show");
+          alert.setAttribute("role","alert");
+          alert.setAttribute("id","alertLocation");
+          alert.innerHTML = "Campo obligatorio...";
+          document.getElementById("divLocation").append(alert);
+
+          let btnAlert = document.createElement("button");
+          btnAlert.setAttribute("type", "button");
+          btnAlert.setAttribute("class", "close");
+          btnAlert.setAttribute("data-dismiss", "alert");
+          btnAlert.setAttribute("aria-label", "close");
+          btnAlert.innerHTML = "<span aria-hidden='true'>&times;</span>";
+          document.getElementById("alertLocation").append(btnAlert);
+
+          falgAlertLocation++;
+          }
+          return false;
+      }
+  }
+
+  let falgAlertAdress=0;
+  function validationAdress(adress){
+     if(adress !== "" && adress.length>3){
+         $("#alertAdress").alert("close");
+         return true;
+     }else{
+         if(falgAlertAdress===0){
+         let alert = document.createElement("div");
+         alert.classList.add("alert", "alert-danger", "alert-dismissible", "fade", "show");
+         alert.setAttribute("role","alert");
+         alert.setAttribute("id","alertAdress");
+         alert.innerHTML = "Campo obligatorio...";
+         document.getElementById("divAdress").append(alert);
+
+         let btnAlert = document.createElement("button");
+         btnAlert.setAttribute("type", "button");
+         btnAlert.setAttribute("class", "close");
+         btnAlert.setAttribute("data-dismiss", "alert");
+         btnAlert.setAttribute("aria-label", "close");
+         btnAlert.innerHTML = "<span aria-hidden='true'>&times;</span>";
+         document.getElementById("alertAdress").append(btnAlert);
+
+         falgAlertAdress++;
+         }
+         return false;
+     }
+ }
+
 };

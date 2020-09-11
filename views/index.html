@@ -1,6 +1,7 @@
 <html>
     <head>
         <meta charset="utf-8" lang="es-ES">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title> MARCA NAHUEL </title>
         <!-- CSS only -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -13,7 +14,7 @@
     </head>
     <body>
         <header></header>
-        <div class="container mt-3">
+        <div class="container-fluid mt-3">
             <div class="row justify-content-md-center">
                 <div class="col">
                     <nav class="navbar navbar-expand-lg navbar-light">
@@ -37,32 +38,33 @@
                               <a id="contact" class="nav-link" href="#">CONTACTO</a>
                             </li>
                           </ul>
-                          <button type="button" class="btn btn-dark m3" id="badgeCounter">
-                            Carrito <span id="badge" class="badge badge-light">0</span>
-                          </button>
+
                         </div>
+                        <button type="button" class="btn btn-dark m3" id="badgeCounter">
+                          Carrito <span id="badge" class="badge badge-light">0</span>
+                        </button>
                       </nav>
                            
                 </div>
             </div>  
         </div>
 
-        <div  id="containerDinks" class="contianer">
+        <div  id="containerDinks" class="container-fluid">
             <div class="row justify-content-md-center"  id="dinamyc-load-bebidas">
             </div>
         </div>
 
-        <div  id="containerPromotions" class="contianer">
+        <div  id="containerPromotions" class="container-fluid">
             <div class="row justify-content-md-center"  id="dinamyc-load-promociones">
             </div>
         </div>
  
-        <div  id="containerContacts" class="contianer">
+        <div  id="containerContacts" class="container-fluid">
             <div class="row justify-content-md-center" >
             </div>
         </div>
 
-        <div class="container">
+        <div class="container-fluid">
             <div class="row justify-content-md-center">
                 <div class="col">
                     <nav>
@@ -73,11 +75,11 @@
             </div>
         </div>
 
-        <div class="container">
+        <div class="container" id="idCarrito">
           <div class="row justify-content-md-center">
-            <div class="col">
+            <div class="col m-3">
               <aside>
-                 <h1>CARRITO</h1>
+                 <h1 class="m-2">CARRITO</h1>
                  <ul id="carrito" class="list-group"></ul>
                  <p class="text-right m-3">Total: <span id="total"></span> &#x20B1; </p>
                  <button id="boton-pedir" class="btn btn-success float-right ml-3 mr-3">Pedir</button>
@@ -89,7 +91,7 @@
 
         <!-- MODAL CLIENT-->
         <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
+          <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">REALIZAR PEDIDO</h5>
@@ -103,16 +105,23 @@
                     <div class="input-group mb-3">
                       <input type="text" class="form-control" id="name" minlength="4" maxlength="25" placeholder="Nombre y Apellido..." autofocus="autofocus" required>
                     </div>
+                    <div id="divName" style="width: 100%;"></div>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" id="location" minlength="4" maxlength="25" placeholder="Localidad..." required>
+                    </div>
+                    <div id="divLocation" style="width: 100%;"></div>
                     <div class="input-group mb-3">
                       <input type="text" class="form-control" id="adress" minlength="4" maxlength="25" placeholder="Direccion..." required>
                     </div>
-                    <div class="input-group mb-3"> 
+                    <div id="divAdress" style="width: 100%;"></div>
+                    <div class="input-group mb-3" > 
                       <input type="number" class="form-control" id="money" min="0" max="50000" placeholder="Con cuanto pagas..." required>
                     </div>
+                    <div id="divMoney" style="width: 100%;"></div>
                     <div class="input-group mb3">
-                      
                       <textarea class="form-control" minlength="0" maxlength="200" aria-label="With textarea" id="comment" placeholder="Aclaraciones y/o comentarios"></textarea>
                     </div>
+                    <div class="p-3 m-3">ENVIO : 50 &#x20B1;</div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -122,7 +131,6 @@
             </div>
           </div>
         </div>
-
         <footer></footer>
     </body>
 </html>
