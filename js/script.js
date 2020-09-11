@@ -379,17 +379,15 @@ window.onload = function() {
     //FUNCION PAGINATION 
     setTimeout(() => {
         let numberPage = $("div[name=paginationContainer]").length;
-        let radius = 3;
+
         showPage = function (pagination) {
-            rederPaginationRedudce(pagination);
+        rederPaginationRedudce(pagination,numberPage);
         if (pagination < 0 || pagination >= numberPage) return;
 
         $("div[name=paginationContainer]").hide().eq(pagination).show();
         $("#paginationNumber li").removeClass("active").eq(pagination).addClass("active");
- 
-        };
+        };    
 
-        
         //GO TO LEFT
         $("#arrowLeft").click(function () {
             showPage($("#paginationNumber .active").index() -2);
@@ -636,15 +634,19 @@ window.onload = function() {
          return false;
      }
  }
-    function rederPaginationRedudce(activeItem,maxItems){
+    function rederPaginationRedudce(activeItem,maxItem){
         let indexOfFirst = activeItem-3;
-        let indexOfLast = activeItem+2;
-        
+        let indexOfLast = activeItem+3;
+        console.log(maxItem);
         $("#paginationNumber li").each(function(index){
             if(index > indexOfFirst &&  index < indexOfLast){
                 $("#paginationNumber li").eq(index).show();
             }else{
-                $("#paginationNumber li").eq(index).hide();
+                if( (index === 0) || (index === maxItem-1)){
+                    $("#paginationNumber li").eq(index).show();
+                }else{
+                    $("#paginationNumber li").eq(index).hide();
+                }
             }
         });
     };
