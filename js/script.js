@@ -433,7 +433,7 @@ window.onload = function() {
     
     //MODAL TEXT INFORMATION
     document.getElementById("boton-pedir").addEventListener("click", function(){
-        $('#staticBackdrop').modal('show');
+        $('#staticBackdrop').modal('show');          
     })
     
     //MODAL PEDIR
@@ -673,5 +673,5 @@ window.onload = function() {
             }
         });
     };
-
+    
 };
