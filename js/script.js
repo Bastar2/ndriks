@@ -272,9 +272,20 @@ window.onload = function() {
                     miNodo.textContent = `${numeroUnidadesItem} x ${miItem[0]['nombreProducto']} - ${miItem[0]['unidadPrecio']} ₱`;
                 }
 
-                // Boton de borrar
+                //Button rest
+                let miBotonRest = document.createElement('button');
+                miBotonRest.classList.add('btn', 'btn-outline-dark', 'ml-5', 'mr-3');
+                miBotonRest.setAttribute("id","btnListRest");
+                miBotonRest.setAttribute('itemRest', item);
+                miBotonRest.innerHTML = "<i class='fas fa-minus' 'style='font-size:36px;'></i>";
+                miBotonRest.style.marginLeft = '1rem';
+                miBotonRest.addEventListener('click', restItemCarrito);
+                miNodo.appendChild(miBotonRest);
+                document.getElementById("carrito").appendChild(miNodo);
+
+                //Button clean
                 let miBoton = document.createElement('button');
-                miBoton.classList.add('btn', 'btn-outline-danger', 'mx-5');
+                miBoton.classList.add('btn', 'btn-outline-danger', 'mx-2');
                 miBoton.setAttribute("id","btnList");
                 miBoton.setAttribute('item', item);
                 miBoton.innerHTML = "<i class='fas fa-times' 'style='font-size:36px;'></i>";
@@ -288,7 +299,20 @@ window.onload = function() {
             let badge = document.getElementById("badge");
             badge.textContent = carrito.length;
         }
-    
+
+        //Rest element
+        function restItemCarrito(){
+            let id = this.getAttribute('itemRest');
+            for(let i=0 ; i < carrito.length ; i++){
+                if(carrito[i] === id){
+                    carrito.splice(i,1);
+                    break;
+                }  
+            }
+            renderizarCarrito();
+            calcularTotal();
+        }
+        //DELET ITEM
         function borrarItemCarrito() {
             let id = this.getAttribute('item');
             carrito = carrito.filter(function (carritoId) {
@@ -637,7 +661,6 @@ window.onload = function() {
     function rederPaginationRedudce(activeItem,maxItem){
         let indexOfFirst = activeItem-3;
         let indexOfLast = activeItem+3;
-        console.log(maxItem);
         $("#paginationNumber li").each(function(index){
             if(index > indexOfFirst &&  index < indexOfLast){
                 $("#paginationNumber li").eq(index).show();
