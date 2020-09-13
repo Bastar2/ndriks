@@ -122,7 +122,9 @@ window.onload = function() {
             let cardDiv = document.createElement("div");
             cardDiv.classList.add("card");
             cardDiv.classList.add("col-12");
-            if(!mobile){
+            if(mobile){
+                cardDiv.classList.add("mt-3");
+            }else{
                 cardDiv.classList.add("m-3");
             }
             cardDiv.classList.add("border-secondary");
@@ -131,7 +133,7 @@ window.onload = function() {
             
             cardDiv.addEventListener("mouseover", function hover() {
                 if(mobile){
-                    cardDiv.setAttribute("class","col-12 card bg-light");
+                    cardDiv.setAttribute("class","col-12 card mt-3 bg-light");
                 }else{
                     cardDiv.setAttribute("class","col-12 card m-3 bg-light");
                 }
@@ -140,7 +142,7 @@ window.onload = function() {
 
             cardDiv.addEventListener("mouseout", function after() {
                 if(mobile){
-                    cardDiv.setAttribute("class","col-12 card border-secondary");
+                    cardDiv.setAttribute("class","col-12 card mt-3 border-secondary");
                 }else{
                     cardDiv.setAttribute("class","col-12 card m-3 border-secondary");
                 }
