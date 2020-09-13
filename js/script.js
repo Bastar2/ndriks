@@ -14,6 +14,7 @@ window.onload = function() {
         //PAGINATION LOAD
         $("#containerDinks").show();
         $("#paginationNumber").show();
+        $("#idToat").hide();
         let paginatioNumber = document.getElementById("paginationNumber");
         let arrowLeft = document.createElement("span");
         arrowLeft.setAttribute("class","page-item");
@@ -236,7 +237,7 @@ window.onload = function() {
             btnAddCarrito.innerHTML = "<i class='fas fa-plus' 'style='font-size:36px;'></i>";
             document.getElementById("cardDinamycP"+i).appendChild(btnAddCarrito);        
         }
-    
+        
         //CARRITO
         let carrito = [];
         let total = 0;
@@ -296,6 +297,8 @@ window.onload = function() {
 
 
             })
+            let badgeTop = document.getElementById("badgeTop");
+            badgeTop.textContent = carrito.length;
             let badge = document.getElementById("badge");
             badge.textContent = carrito.length;
         }
@@ -433,7 +436,16 @@ window.onload = function() {
     
     //MODAL TEXT INFORMATION
     document.getElementById("boton-pedir").addEventListener("click", function(){
-        $('#staticBackdrop').modal('show');          
+        let cantCarrito = parseInt( document.getElementById("badge").innerHTML );
+         if(cantCarrito === 0){
+            $("#idToat").show();
+            $('.toast').toast('show');
+            setTimeout(() => {
+                $("#idToat").hide();
+            },1000);
+        }else{
+            $('#staticBackdrop').modal('show');   
+        }
     })
     
     //MODAL PEDIR
@@ -471,7 +483,7 @@ window.onload = function() {
 
 
     });
- 
+ /*
      //DINAMIC CALL BY STOCK COUNT PROMOCIONES
      $("#containerPromotions").hide();
      let divDinamycLaodPromociones = document.getElementById("dinamyc-load-promociones");
@@ -573,7 +585,7 @@ window.onload = function() {
          document.getElementById("cardDinamycPromociones"+i).appendChild(cardSmall);
          //CREAtE CARD CONTENT --> END
      }
-
+    */
      let falgAlertMoney=0;
      function validationMoney(money,total){
         document.getElementById("money").setAttribute("min",(total+50));

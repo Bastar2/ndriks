@@ -14,7 +14,7 @@
         <script type="text/javascript" src="js/script.js"></script>    
     </head>
     <button type="button" class="position-fixed btn btn-dark m3 shadow" id="badgeCounter" style="top: 8px; right: 16px; z-index: 9999;">
-      <a href="#idCarrito">Carrito </a> <i class="fas fa-shopping-cart"></i> <span id="badge" class="badge badge-light">    0</span>
+      <a href="#idCarrito">Carrito </a> <i class="fas fa-shopping-cart"></i> <span id="badgeTop" class="badge badge-light">    0</span>
     </button>
       <div class="container-md mt-3">
           <div class="row justify-content-md-center">
@@ -81,11 +81,28 @@
                 <div class="col-8">
                   <h1 class="m-2">CARRITO</h1>
                 </div>
+
                 <div class="col-4 text-right p-3">
                   <button type="button" class="btn btn-dark m3 shadow" id="badgeCounter">
                     Carrito <i class="fas fa-shopping-cart"></i> <span id="badge" class="badge badge-light">    0</span>
                     </button>
                 </div>
+              </div>
+              <!-- TOAST EMPTY BADGE-->
+              <div id="idToat">
+                <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center" style="height: 200px;">
+                <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="1000">
+                  <div class="toast-header">
+                    <strong class="mr-auto">NDrinks</strong>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="toast-body">
+                    El carrito esta vacion, selecione algo antes.
+                  </div>
+                </div>
+              </div>
               </div>
                 <ul id="carrito" class="list-group"></ul>
                 <p class="text-right m-3">Total: <span id="total"></span> &#x20B1; </p>
@@ -102,7 +119,7 @@
 
     <!-- MODAL CLIENT-->
     <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="staticBackdropLabel">REALIZAR PEDIDO</h5>
@@ -145,14 +162,14 @@
       </div>
      </div>
     </div>
-    
+
     <hr>
 
     <footer class="m3 p3 bg-light">
       <div class="container-md">
         <div class="row justify-content-md-center">
           <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-            <div class="p-3 mb-2 bg-transparent text-dark"><h3>Informacion </h3></div>
+            <div class="p-3 mb-2 bg-transparent text-dark"><h3>Información </h3></div>
               <div class="row">
                 <div class="col-2 text-right">
                   <i class="fas fa-phone-alt"></i>
@@ -167,13 +184,13 @@
                   <i class="fas fa-map-marker-alt"></i>
                 </div>
                 <div class="col-10 text-left">
-                  <span class="p-3 mb-2 bg-transparent text-dark">Miller 1141 - Dorrego - Guaymallen - Mendoza - Argentina.</span>
+                  <span class="p-3 mb-2 bg-transparent text-dark">Miller 1141 - Dorrego - Guaymallén - Mendoza - Argentina.</span>
                 </div>
                 </div>
               </div>
      
           <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-            <div class="p-3 mb-2 bg-transparent text-dark"><h3>Horarios de Atencion </h3></div>
+            <div class="p-3 mb-2 bg-transparent text-dark"><h3>Horarios de Atención </h3></div>
             <div class="row">
               <div class="col-2 text-right">
                 <i class="far fa-clock"></i>
