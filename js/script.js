@@ -121,17 +121,17 @@ window.onload = function() {
             cardDiv.classList.add("col-12");
             cardDiv.classList.add("m-3");
             cardDiv.classList.add("border-secondary");
-            cardDiv.setAttribute("style", "max-width: 530px;")
+            cardDiv.setAttribute("style", "max-width: 529px;")
             cardDiv.setAttribute("id","cardDinamyc-"+i);
             
             cardDiv.addEventListener("mouseover", function hover() {
                 cardDiv.setAttribute("class","col-12 card m-3 bg-light");
-                cardDiv.setAttribute("style", "max-width: 530px;");
+                cardDiv.setAttribute("style", "max-width: 529px;");
             }, false);
 
             cardDiv.addEventListener("mouseout", function after() {
                 cardDiv.setAttribute("class","col-12 card m-3 border-secondary");
-                cardDiv.setAttribute("style", "max-width: 530px;");
+                cardDiv.setAttribute("style", "max-width: 529px;");
             }, false);
 
             cardDiv.innerHTML;
