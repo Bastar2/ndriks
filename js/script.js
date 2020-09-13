@@ -1,4 +1,6 @@
 window.onload = function() {
+    let mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
     const numberWPP = 5492612083385;
     const requestURL = '/lista';
     const xhttp = new XMLHttpRequest();
@@ -120,17 +122,28 @@ window.onload = function() {
             let cardDiv = document.createElement("div");
             cardDiv.classList.add("card");
             cardDiv.classList.add("col-12");
-            cardDiv.classList.add("m-3");
+            if(!mobile){
+                cardDiv.classList.add("m-3");
+            }
+            cardDiv.classList.add("border-secondary");
             cardDiv.setAttribute("style", "max-width: 530px;")
             cardDiv.setAttribute("id","cardDinamyc-"+i);
             
             cardDiv.addEventListener("mouseover", function hover() {
-                cardDiv.setAttribute("class","col-12 card m-3 bg-light");
+                if(mobile){
+                    cardDiv.setAttribute("class","col-12 card bg-light");
+                }else{
+                    cardDiv.setAttribute("class","col-12 card m-3 bg-light");
+                }
                 cardDiv.setAttribute("style", "max-width: 530px;");
             }, false);
 
             cardDiv.addEventListener("mouseout", function after() {
-                cardDiv.setAttribute("class","col-12 card m-3");
+                if(mobile){
+                    cardDiv.setAttribute("class","col-12 card border-secondary");
+                }else{
+                    cardDiv.setAttribute("class","col-12 card m-3 border-secondary");
+                }
                 cardDiv.setAttribute("style", "max-width: 530px;");
             }, false);
 
@@ -684,5 +697,4 @@ window.onload = function() {
             }
         });
     };
-    
 };
